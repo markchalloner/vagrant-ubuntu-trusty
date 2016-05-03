@@ -1,0 +1,12 @@
+---
+    hostname: oban-site
+    php_ppa: php5-oldstable
+    home: /home/vagrant
+    extra_path: "{{ home }}/bin"
+    site_share: /var/www/www.obandigital.test
+    site_local: /var/www/www.obandigital.local
+    site_root: "{{ site_share }}/web"
+    sys_packages: ["vim","git","htop","iotop","imagemagick"]
+    dist: precise
+    php_packages: ["php5-cli","php5-curl","php5-imagick","php5-common","php5-gd","php5-mysql"]
+    pecl_packages: []

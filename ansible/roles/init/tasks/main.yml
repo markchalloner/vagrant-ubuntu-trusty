@@ -1,0 +1,53 @@
+---
+- name: Update apt
+  become: yes
+  apt: update_cache=yes
+
+- name: Install System Packages
+  become: yes
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - make
+    - gcc
+    - g++
+    - python
+    - curl
+    - wget
+    - mailutils
+    - python-software-properties
+    - subversion
+    - git-core
+
+- name: Update apt
+  become: yes
+  apt: update_cache=yes
+
+- name: Configure the timezone
+  become: yes
+  template: src=timezone.tpl dest=/etc/timezone
+
+- name: More Configure the timezone
+  become: yes
+  file: src=/usr/share/zoneinfo/{{timezone}} dest=/etc/localtime state=link force=yes backup=yes
+
+- name: Set the hostname in /etc/hostname
+  become: yes
+  shell: echo {{ hostname }} > /etc/hostname
+  when: hostname is defined
+
+- name: Set the hostname
+  become: yes
+  shell: hostname {{ hostname }}
+  when: hostname is defined
+
+- name: Update /etc/hosts
+  become: yes
+  lineinfile: dest=/etc/hosts regexp='^127\.0\.0\.1' line='127.0.0.1 localhost {{ hostname }}' owner=root group=root mode=0644
+
+- name: Add TERM
+  become: yes
+  lineinfile: >
+    dest=/etc/environment
+    state=present
+    regexp='^TERM='
+    line="TERM={{terminal}}"
