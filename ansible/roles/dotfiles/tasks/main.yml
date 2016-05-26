@@ -1,0 +1,15 @@
+---
+- name: Download dotfiles
+  git: >
+    repo=https://github.com/markchalloner/dotfiles
+    dest=~/dotfiles
+
+- name: Link dotfiles directory
+  file: >
+    src=~/dotfiles
+    dest=~/.link-files 
+    state=link
+
+- name: Install dotfiles
+  command: link-files -i -o
+

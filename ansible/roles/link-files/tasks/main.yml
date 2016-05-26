@@ -1,0 +1,14 @@
+---
+- name: Download link-files
+  become: yes
+  git: >
+    repo=https://github.com/markchalloner/link-files.git
+    dest=/var/git/link-files
+
+- name: Install link-files
+  become: yes
+  command: make install
+  args:
+    chdir: /var/git/link-files
+    creates: /usr/local/bin/link-files
+

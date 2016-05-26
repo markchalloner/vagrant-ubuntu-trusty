@@ -1,0 +1,20 @@
+---
+- name: Get public key
+  command: "ssh-keyscan -t rsa {{ ssh_known_hosts_hosts | join(' ') }}"
+  register: ssh_known_hosts_pubs
+  ignore_errors: True
+  failed_when: False
+
+- name: Create known_hosts
+  file: >
+    path="~{{ ssh_known_hosts_username }}/.ssh/known_hosts"
+    state=touch
+    owner={{ ssh_known_hosts_username }}
+    mode=0600
+
+- name: Add public key to known_hosts
+  known_hosts: >
+    path="~{{ ssh_known_hosts_username }}/.ssh/known_hosts"
+    host="{{ item | regex_replace('(^[^ ]+) .*', '\\1') }}"
+    key="{{ item }}"
+  with_items: "{{ ssh_known_hosts_pubs.stdout_lines }}"

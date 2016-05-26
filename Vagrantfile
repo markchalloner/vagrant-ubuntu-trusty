@@ -3,7 +3,7 @@
 
 # Variables
 vm = {
-    :hostname       => 'ubuntu-trusty-vm',
+    :hostname       => 'home-ubuntu-trusty',
     :ip             => '192.168.33.11',
     :path_self      => '/vagrant',
 }
@@ -85,7 +85,7 @@ def terminal
         when :windows
             "cygwin"
         else
-            "xterm-256color"
+            "xterm-color"
     end
 end
 

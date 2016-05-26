@@ -7,4 +7,21 @@
   vars_files:
     - vars/common.yml
   roles:
-    - init
+    - role: init
+      tags: [init]
+      become: yes
+    - role: ssh-known-hosts
+      tags: [ssh-known-hosts, github-tools]
+      become: yes
+      ssh_known_hosts_username: "root"
+      ssh_known_hosts_hosts: [github.com, 192.30.252.129]
+    - role: ssh-known-hosts
+      tags: [ssh-known-hosts, github-tools]
+      become: yes
+      ssh_known_hosts_username: "ubuntu"
+      ssh_known_hosts_hosts: [github.com, 192.30.252.129]
+    - role: link-files
+      tags: [link-files, github-tools]
+    - role: dotfiles
+      tags: [dotfiles, github-tools]
+
