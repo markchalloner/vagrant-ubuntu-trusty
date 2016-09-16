@@ -1,7 +1,7 @@
 ---
 - name: Download dotfiles
   git: >
-    repo=https://github.com/markchalloner/dotfiles
+    repo=git@github.com:markchalloner/dotfiles.git
     dest=~/dotfiles
 
 - name: Link dotfiles directory
